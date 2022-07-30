@@ -38,7 +38,9 @@ int atom_length(const char *str) {
 }
 
 const char *atom_string(const char *str) {
+    assert(str != NULL);
 
+    return _atom_new(str, strlen(str));
 }
 
 const char *atom_int(long n) {
