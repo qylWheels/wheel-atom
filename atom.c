@@ -2,7 +2,7 @@
 /**
  * 文件名：atom.c
  * 作者：qylWheels
- * 日期：2022年7月29日
+ * 日期：2022年7月31日
  * 功能：接口的实现
  */
 
@@ -35,7 +35,21 @@ unsigned long  _calc_hash   (const char *str, int len);
 
 // 接口的实现
 int atom_length(const char *str) {
+    assert(str != NULL);
+    
+    struct _Atom *p;
+    int i;
 
+    for(i = 0; i < NELEMS(_buckets); i++) {
+	    for(p = _buckets[i]; p != NULL; p = p->next) {
+		    if(p->str == str) {
+			    return p->len;
+		    }
+	    }
+    }
+
+    assert(0);
+    return -1;
 }
 
 const char *atom_string(const char *str) {
