@@ -142,5 +142,10 @@ void _init_scatter(void) {
 }
 
 unsigned long _calc_hash(const char *str, int len) {
-
+    int i;
+    unsigned long h;
+    for(h = 0, i = 0; i < len; i++) {
+	h = (h << 1) + _scatter.scatter_table[(unsigned char)str[i]];
+    }
+    return h;
 }
