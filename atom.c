@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include <time.h>
+#include <sys/time.h>
 #include "atom.h"
 
 #define NELEMS(x) (sizeof(x) / sizeof(x[0]))
@@ -26,7 +26,7 @@ struct _Atom {
 // 用于均匀生成字符串hash的数据结构
 struct _Scatter {
     int flag;
-    unsigned long scatter_table[256];
+    int scatter_table[256];
 } _scatter = {0, {0}};
 
 // 内部函数声明
@@ -130,9 +130,11 @@ const char *_atom_new(const char *str, int len) {
 
 void _init_scatter(void) {
     int i;
- 
+    struct timeval t;
+
     for(i = 0; i < 256; i++) {
-        srand((unsigned int)time(NULL));
+	gettimeofday(&t, NULL);
+        srand((unsigned int)t.tv_usec);
     	_scatter.scatter_table[i] = rand();
     } 
 
