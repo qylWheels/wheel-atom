@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #include "atom.h"
 
 #define NELEMS(x) (sizeof(x) / sizeof(x[0]))
@@ -44,7 +45,26 @@ const char *atom_string(const char *str) {
 }
 
 const char *atom_int(long n) {
+    unsigned long m;
+    char str[43];	// 43是一个魔法数字，一个十进制long型数据不会超过43位
+    char *s = str + sizeof(str);
 
+    if(n == LONG_MIN) {
+        m = LONG_MAX + 1UL;
+    } else if(n < 0) {
+        m = -n; 
+    } else {
+        m = n; 
+    }
+
+    do {
+	*--s = m % 10 + '0';
+    } while((m /= 10) > 0);
+    if(n < 0) {
+	*--s = '-';
+    }
+
+    return _atom_new(s, str + sizeof(str) - s);
 }
 
 // 内部函数的实现
@@ -86,6 +106,10 @@ const char *_atom_new(const char *str, int len) {
     _buckets[h] = p;
 
     return p->str;
+}
+
+void _init_scatter(void) {
+
 }
 
 unsigned long _calc_hash(const char *str, int len) {
