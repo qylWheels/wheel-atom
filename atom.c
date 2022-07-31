@@ -26,7 +26,7 @@ struct _Atom {
 // 用于均匀生成字符串hash的数据结构
 struct _Scatter {
     int flag;
-    int scatter_table[256];
+    unsigned long scatter_table[256];
 } _scatter = {0, {0}};
 
 // 内部函数声明
@@ -135,7 +135,7 @@ void _init_scatter(void) {
     for(i = 0; i < 256; i++) {
 	gettimeofday(&t, NULL);
         srand((unsigned int)t.tv_usec);
-    	_scatter.scatter_table[i] = rand();
+    	_scatter.scatter_table[i] = (unsigned long)rand();
     } 
 
     return;
