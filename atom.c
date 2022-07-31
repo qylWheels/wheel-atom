@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+#include <time.h>
 #include "atom.h"
 
 #define NELEMS(x) (sizeof(x) / sizeof(x[0]))
@@ -86,6 +87,11 @@ const char *_atom_new(const char *str, int len) {
     assert(str != NULL);
     assert(len >= 0);
 
+    // 若_scatter数组未初始化，先初始化
+    if(_scatter.flag == 0) {
+	_init_scatter();
+    }
+
     struct _Atom *p;
 
     // 查找是否已有相同的原子，有则直接返回
@@ -123,7 +129,14 @@ const char *_atom_new(const char *str, int len) {
 }
 
 void _init_scatter(void) {
+    int i;
+ 
+    for(i = 0; i < 256; i++) {
+        srand((unsigned int)time(NULL));
+    	_scatter.scatter_table[i] = rand();
+    } 
 
+    return;
 }
 
 unsigned long _calc_hash(const char *str, int len) {
