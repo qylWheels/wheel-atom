@@ -14,4 +14,8 @@ extern       int   atom_length(const char *str);
 extern const char *atom_string(const char *str);
 extern const char *atom_int   (long n);
 
+/* XXX: 测试用的接口 */
+extern       void atom_get_distribution(int total_cnt);
+
 #endif
+

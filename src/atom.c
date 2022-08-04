@@ -149,3 +149,4 @@ unsigned long _calc_hash(const char *str, int len) {
     }
     return h;
 }
+
