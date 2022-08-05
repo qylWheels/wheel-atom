@@ -2,7 +2,7 @@
 /**
  * 文件名：atom.c
  * 作者：qylWheels
- * 日期：2022年7月31日
+ * 日期：2022年8月5日
  * 功能：接口的实现
  */
 
@@ -137,6 +137,8 @@ void _init_scatter(void) {
         srand((unsigned int)t.tv_usec);
     	_scatter.scatter_table[i] = (unsigned long)rand();
     } 
+    
+    _scatter.flag = 1;
 
     return;
 }

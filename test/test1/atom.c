@@ -163,6 +163,8 @@ void _init_scatter(void) {
         srand((unsigned int)t.tv_usec);
     	_scatter.scatter_table[i] = (unsigned long)rand();
     } 
+	
+    _scatter.flag = 1;
 
     return;
 }
