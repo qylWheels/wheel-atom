@@ -21,7 +21,7 @@ struct _Atom {
     int len;
     char *str;
     struct _Atom *next;
-} *_buckets[2048];
+} *_buckets[2039];
 
 // 用于均匀生成字符串hash的数据结构
 struct _Scatter {
@@ -99,7 +99,7 @@ const char *_atom_new(const char *str, int len) {
     int i;
 
     h = _calc_hash(str, strlen(str));
-    h &= NELEMS(_buckets) - 1;
+    h %= NELEMS(_buckets);
 
     for(p = _buckets[h]; p != NULL; p = p->next) {
         if(p->len == len) {
